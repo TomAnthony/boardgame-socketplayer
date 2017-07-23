@@ -37,7 +37,10 @@ class Client(object):
         try:
             if self.player.player:
                 print("You were Player " + str(self.player.player))
+                print("Pre-Logging.")
                 if self.logfile:
+                    print("Logging.")
+                    print(os.getcwd())
                     # only works for two player at moment
 
                     me = unicode(self.player.player)
