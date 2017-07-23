@@ -24,7 +24,7 @@ parser.add_argument('player', choices=sorted(player_plugins))
 parser.add_argument('--address', nargs='?')
 parser.add_argument('--port', nargs='?', type=int)
 parser.add_argument('-p', '--player_params', action='append')
-parser.add_argument('--logfile', action='append')
+parser.add_argument('--logfile')
 parser.add_argument('-e', '--extra', action='append')
 
 args = parser.parse_args()
