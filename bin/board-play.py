@@ -35,5 +35,5 @@ player_kwargs = dict(arg.split('=') for arg in args.player_params or ())
 
 
 client = player.Client(player_obj(board(), **player_kwargs),
-                       args.address, args.port, logfile)
+                       args.address, args.port, args.logfile)
 client.run()
