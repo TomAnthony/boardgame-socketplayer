@@ -21,17 +21,19 @@ parser = argparse.ArgumentParser(
     description="Play a boardgame using a specified player type.")
 parser.add_argument('game', choices=sorted(board_plugins))
 parser.add_argument('player', choices=sorted(player_plugins))
-parser.add_argument('address', nargs='?')
-parser.add_argument('port', nargs='?', type=int)
+parser.add_argument('--address', nargs='?')
+parser.add_argument('--port', nargs='?', type=int)
+parser.add_argument('-p', '--player_params', action='append')
+parser.add_argument('--logfile', action='append')
 parser.add_argument('-e', '--extra', action='append')
 
 args = parser.parse_args()
 
 board = board_plugins[args.game]
 player_obj = player_plugins[args.player]
-player_kwargs = dict(arg.split('=') for arg in args.extra or ())
+player_kwargs = dict(arg.split('=') for arg in args.player_params or ())
 
 
 client = player.Client(player_obj(board(), **player_kwargs),
-                       args.address, args.port)
+                       args.address, args.port, logfile)
 client.run()

@@ -1,10 +1,10 @@
 import json
 import socket
 import sys
-
+import os
 
 class Client(object):
-    def __init__(self, player, addr=None, port=None):
+    def __init__(self, player, addr=None, port=None, logfile=None):
         self.player = player
         self.running = False
         self.receiver = {'player': self.handle_player,
@@ -13,8 +13,11 @@ class Client(object):
                          'illegal': self.handle_illegal,
                          'update': self.handle_update}
 
+        self.logfile = logfile
         self.addr = addr if addr is not None else '127.0.0.1'
         self.port = port if port is not None else 4242
+        self.final_points = {}
+        self.final_winners = {}
 
     def run(self):
         self.socket = socket.create_connection((self.addr, self.port))
@@ -29,6 +32,36 @@ class Client(object):
                         "Unexpected message from server: {0!r}".format(message))
 
                 self.receiver[data['type']](data)
+        
+        # Game is over:
+        try:
+            if self.player.player:
+                print("You were Player " + str(self.player.player))
+                if self.logfile:
+                    # only works for two player at moment
+
+                    me = unicode(self.player.player)
+                    them = unicode(3-self.player.player) 
+
+                    if self.final_winners[me] == 1:
+                        outcome = "win"
+                    elif self.final_winners[unicode(self.player.player)] == 0.5:
+                        outcome = "draw"
+                    elif self.final_winners[unicode(self.player.player)] == 0:
+                        outcome = "loss"
+                    else:
+                        outcome = "unknown"
+
+                    with open(self.logfile, 'a') as the_file:
+                        entry = "\t".join([
+                                    outcome,
+                                    str(self.final_points[me]),
+                                    str(self.final_points[them])
+                                    ])
+                        the_file.write(entry + "" + "\n")
+
+        except:
+            pass
 
     def handle_player(self, data):
         player = data['message']
@@ -52,10 +85,13 @@ class Client(object):
 
         print self.player.display(state, action)
         if data.get('winners') is not None:
+            self.final_points = data['points']
+            self.final_winners = data['winners']
             print self.player.winner_message(data['winners'])
             self.running = False
         elif data['state']['player'] == self.player.player:
             action = self.player.get_action()
+            # print("You are Player " + str(self.player.player))
             self.send({'type': 'action', 'message': action})
 
     def send(self, data):
