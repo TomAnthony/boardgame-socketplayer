@@ -55,6 +55,7 @@ class Client(object):
                     with open(self.logfile, 'a') as the_file:
                         entry = "\t".join([
                                     outcome,
+                                    str(me),
                                     str(self.final_points[me]),
                                     str(self.final_points[them])
                                     ])
