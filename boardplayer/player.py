@@ -75,12 +75,12 @@ class Client(object):
                                     str(me),
                                     str(self.final_points[me]),
                                     str(self.final_points[them]),
-                                    str(me_mean_depth),
-                                    str(them_mean_depth),
-                                    str(me_mean_playouts),
-                                    str(them_mean_playouts),
-                                    str(me_mean_time),
-                                    str(them_mean_time),
+                                    str(round(me_mean_depth),2),
+                                    str(round(them_mean_depth),2),
+                                    str(round(me_mean_playouts),2),
+                                    str(round(them_mean_playouts),2),
+                                    str(round(me_mean_time),2),
+                                    str(round(them_mean_time),2),
                                     ])
                         the_file.write(entry + "" + "\n")
 
