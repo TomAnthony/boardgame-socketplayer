@@ -51,7 +51,6 @@ class Client(object):
                     me = unicode(self.player.player)
                     them = unicode(3-self.player.player) 
 
-                    print("ONE")
                     if self.final_winners[me] == 1:
                         outcome = "win"
                     elif self.final_winners[unicode(self.player.player)] == 0.5:
@@ -68,19 +67,18 @@ class Client(object):
                     me_mean_time = sum(self.final_stats['search_time'][me]) / float(len(self.final_stats['search_time'][me]))
                     them_mean_time = sum(self.final_stats['search_time'][them]) / float(len(self.final_stats['search_time'][them]))
 
-
                     with open(self.logfile, 'a') as the_file:
                         entry = "\t".join([
                                     outcome,
                                     str(me),
                                     str(self.final_points[me]),
                                     str(self.final_points[them]),
-                                    str(round(me_mean_depth),2),
-                                    str(round(them_mean_depth),2),
-                                    str(round(me_mean_playouts),2),
-                                    str(round(them_mean_playouts),2),
-                                    str(round(me_mean_time),2),
-                                    str(round(them_mean_time),2),
+                                    str(round(me_mean_depth,2)),
+                                    str(round(them_mean_depth,2)),
+                                    str(round(me_mean_playouts,2)),
+                                    str(round(them_mean_playouts,2)),
+                                    str(round(me_mean_time,2)),
+                                    str(round(them_mean_time,2)),
                                     ])
                         the_file.write(entry + "" + "\n")
 
