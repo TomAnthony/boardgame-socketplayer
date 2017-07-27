@@ -64,8 +64,10 @@ class Client(object):
                     them_mean_depth = sum(self.final_stats['max_depth'][them]) / float(len(self.final_stats['max_depth'][them]))
                     me_mean_playouts = sum(self.final_stats['playouts'][me]) / float(len(self.final_stats['playouts'][me]))
                     them_mean_playouts = sum(self.final_stats['playouts'][them]) / float(len(self.final_stats['playouts'][them]))
-                    me_mean_time = sum(self.final_stats['search_time'][me]) / float(len(self.final_stats['search_time'][me]))
-                    them_mean_time = sum(self.final_stats['search_time'][them]) / float(len(self.final_stats['search_time'][them]))
+                    # me_mean_time = sum(self.final_stats['search_time'][me]) / float(len(self.final_stats['search_time'][me]))
+                    # them_mean_time = sum(self.final_stats['search_time'][them]) / float(len(self.final_stats['search_time'][them]))
+                    me_visited_nodes = sum(self.final_stats['visited_nodes'][me])
+                    them_visited_nodes = sum(self.final_stats['visited_nodes'][them])
 
                     with open(self.logfile, 'a') as the_file:
                         entry = "\t".join([
@@ -77,8 +79,8 @@ class Client(object):
                                     str(round(them_mean_depth,2)),
                                     str(round(me_mean_playouts,2)),
                                     str(round(them_mean_playouts,2)),
-                                    str(round(me_mean_time,2)),
-                                    str(round(them_mean_time,2)),
+                                    str(round(me_visited_nodes,2)),
+                                    str(round(them_visited_nodes,2)),
                                     ])
                         the_file.write(entry + "" + "\n")
 
@@ -109,6 +111,7 @@ class Client(object):
         self.player.update(state)
 
         print self.player.display(state, action)
+        # print self.player.board.pack_state(state)
 
         if data.get('winners') is not None:
             self.final_points = data['points']
