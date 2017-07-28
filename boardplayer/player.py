@@ -64,6 +64,8 @@ class Client(object):
                     them_mean_depth = sum(self.final_stats['max_depth'][them]) / float(len(self.final_stats['max_depth'][them]))
                     me_mean_playouts = sum(self.final_stats['playouts'][me]) / float(len(self.final_stats['playouts'][me]))
                     them_mean_playouts = sum(self.final_stats['playouts'][them]) / float(len(self.final_stats['playouts'][them]))
+                    me_sum_playouts = sum(self.final_stats['playouts'][me])
+                    them_sum_playouts = sum(self.final_stats['playouts'][them])
                     # me_mean_time = sum(self.final_stats['search_time'][me]) / float(len(self.final_stats['search_time'][me]))
                     # them_mean_time = sum(self.final_stats['search_time'][them]) / float(len(self.final_stats['search_time'][them]))
                     me_visited_nodes = sum(self.final_stats['visited_nodes'][me])
@@ -77,10 +79,12 @@ class Client(object):
                                     str(self.final_points[them]),
                                     str(round(me_mean_depth,2)),
                                     str(round(them_mean_depth,2)),
-                                    str(round(me_mean_playouts,2)),
-                                    str(round(them_mean_playouts,2)),
-                                    str(round(me_visited_nodes,2)),
-                                    str(round(them_visited_nodes,2)),
+                                    str(round(me_mean_playouts,0)),
+                                    str(round(them_mean_playouts,0)),
+                                    str(round(me_sum_playouts,0)),
+                                    str(round(them_sum_playouts,0)),
+                                    str(round(me_visited_nodes,0)),
+                                    str(round(them_visited_nodes,0)),
                                     ])
                         the_file.write(entry + "" + "\n")
 
